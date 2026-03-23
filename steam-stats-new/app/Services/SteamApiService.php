@@ -54,4 +54,40 @@ class SteamApiService
             return null;
         }
     }
+
+    public function getSteamLevel(string $steamId): ?int
+    {
+        try {
+            $response = $this->client->get('IPlayerService/GetSteamLevel/v1/', [
+                'query' => [
+                    'key' => $this->apiKey,
+                    'steamid' => $steamId,
+                ]
+            ]);
+            $data = json_decode($response->getBody(), true);
+            return $data['response']['player_level'] ?? null;
+        } catch (\Exception $e) {
+            Log::error('Steam API error (getSteamLevel): ' . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function getFriendCount(string $steamId): ?int
+    {
+        try {
+            $response = $this->client->get('ISteamUser/GetFriendList/v1/', [
+                'query' => [
+                    'key' => $this->apiKey,
+                    'steamid' => $steamId,
+                    'relationship' => 'friend',
+                ]
+            ]);
+            $data = json_decode($response->getBody(), true);
+            $friends = $data['friendslist']['friends'] ?? [];
+            return count($friends);
+        } catch (\Exception $e) {
+            Log::error('Steam API error (getFriendCount): ' . $e->getMessage());
+            return null;
+        }
+    }
 }
