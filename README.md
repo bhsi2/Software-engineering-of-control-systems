@@ -7,3 +7,8 @@ php artisan serve
 ```
 curl http://localhost:8000/stats/123456789
 ```
+
+Tests
+```
+./vendor/bin/pest
+```

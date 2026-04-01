@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use GuzzleHttp\Client;
@@ -9,9 +10,9 @@ class SteamApiService
     private Client $client;
     private string $apiKey;
 
-    public function __construct()
+    public function __construct(string $apiKey)
     {
-        $this->apiKey = config('services.steam.api_key');
+        $this->apiKey = $apiKey;
         $this->client = new Client([
             'base_uri' => 'https://api.steampowered.com/',
             'timeout' => 10.0,
