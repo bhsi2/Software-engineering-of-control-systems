@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\AuthServiceClient;
 use App\Services\SteamStatsProvider;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
@@ -9,14 +10,24 @@ use Illuminate\Support\Facades\Log;
 class StatsController extends Controller
 {
     public function __construct(
+        protected AuthServiceClient $authClient,
         protected SteamStatsProvider $statsProvider
     ) {}
 
     public function show(int $telegramId): JsonResponse
     {
-        // Фиксированный Steam ID (можно вынести в конфиг или .env)
-        $steamId = config('services.steam.default_steam_id', '76561197960287930');
+        // 1. Запрашиваем steamId у сервиса аутентификации
+        try {
+            $steamId = $this->authClient->getSteamId($telegramId);
+        } catch (\RuntimeException $e) {
+            return response()->json(['error' => 'Auth service unavailable'], 503);
+        }
 
+        if (!$steamId) {
+            return response()->json(['error' => 'No binding found'], 404);
+        }
+
+        // 2. Получаем статистику из Steam
         try {
             $stats = $this->statsProvider->getStats($steamId);
         } catch (\RuntimeException $e) {

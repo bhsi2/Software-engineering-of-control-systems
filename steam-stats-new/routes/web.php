@@ -9,3 +9,7 @@ Route::get('/', function () {
 use App\Http\Controllers\StatsController;
 
 Route::get('/stats/{telegramId}', [StatsController::class, 'show']);
+
+use App\Http\Controllers\AiStatsController;
+
+Route::post('/ai/stats', [AiStatsController::class, 'getSummary']);
