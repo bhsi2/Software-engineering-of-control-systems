@@ -9,11 +9,11 @@
 ## Установка и запуск
 
 1. **Клонируйте репозиторий**  
-   ```
-   bash
-   git clone https://github.com/your-username/steam-stats-service.git
-   cd steam-stats-service
-   ```
+```
+bash
+git clone https://github.com/your-username/steam-stats-service.git
+cd steam-stats-service
+```
 2. **Скопируйте файл окружения**
 ```
 cp .env.example .env
@@ -79,6 +79,7 @@ GET /steam-id/{telegramId}
 {
   "steamId": "76561197960287930"
 }
+```
 При отсутствии привязки – 404.
 
 
@@ -87,11 +88,11 @@ GET /steam-id/{telegramId}
 Микросервис предоставляет эндпоинт для AI-сервиса:
 POST /api/ai/stats
 Content-Type: application/json
-
+```
 {
 "telegramId": 123456789
 }
-
+```
 
 Ответ при успехе (200):
 ```json
@@ -99,7 +100,7 @@ Content-Type: application/json
   "status": "success",
   "summary": "Игрок Gaben имеет 542 игр в библиотеке, общее наигранное время: 14837 часов. Самая популярная игра: Team Fortress 2. Уровень Steam: 123. Количество друзей: 250. Профиль публичный. Пользователь сейчас в сети."
 }
-
+```
 При ошибках:
 
 400 – отсутствует telegramId
