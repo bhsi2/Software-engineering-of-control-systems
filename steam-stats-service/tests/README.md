@@ -2,7 +2,6 @@
 
 - **Unit-тесты для `SteamApiService`** – проверяют, что сервис корректно формирует запросы к Steam API и обрабатывает ответы/ошибки.
 - **Unit-тесты для `SteamStatsProvider`** – проверяют бизнес-логику агрегации статистики, не обращаясь к реальному API.
-- **Feature-тесты для `StatsController`** – проверяют HTTP-эндпоинт на корректность статусов и структуры ответа.
 
 
 ## 1. Тесты `SteamApiServiceTest` (Unit)
@@ -86,30 +85,4 @@
 **`it throws exception when player summary missing`**
 - Мокаем `getPlayerSummary` возвращает `null`.
 - Ожидаем, что метод `getStats` выбросит `RuntimeException` с сообщением "Steam profile not found".
-
----
-
-## 3. Тесты `StatsControllerTest` (Feature)
-
-Эти тесты проверяют HTTP-эндпоинт `/stats/{telegramId}`.
-
-### Используемые моки
-- `Mockery::mock(SteamStatsProvider::class)` – подменяем бизнес-логику.
-- `$this->app->instance()` – регистрируем мок в контейнере Laravel для теста.
-
-### Тесты
-
-**`it returns stats for any telegramId`**
-- Мокаем провайдер, чтобы он возвращал заранее созданный DTO (с любой статистикой).
-- Выполняем GET-запрос к эндпоинту.
-- Проверяем, что статус 200 и ответ совпадает с ожидаемым DTO.
-- При этом `telegramId` в запросе игнорируется – сервис использует фиксированный Steam ID (как в коде контроллера).
-
-**`it returns 404 when steam profile not found`**
-- Мокаем провайдер, чтобы он выбрасывал исключение `RuntimeException('Steam profile not found')`.
-- Проверяем статус 404 и сообщение об ошибке.
-
-**`it returns 500 on unexpected exception`**
-- Мокаем провайдер, чтобы он выбрасывал общее исключение `Exception`.
-- Проверяем статус 500 и сообщение `"Internal server error"`.
 

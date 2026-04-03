@@ -11,7 +11,7 @@
 1. **Клонируйте репозиторий**  
 ```
 bash
-git clone https://github.com/your-username/steam-stats-service.git
+git clone https://github.com/bhsi2/Software-engineering-of-control-systems.git
 cd steam-stats-service
 ```
 2. **Скопируйте файл окружения**
@@ -52,6 +52,7 @@ php artisan serve
 ```
 
 **Тесты**
+
 Установка Pest
 ```
 composer require pestphp/pest --dev
