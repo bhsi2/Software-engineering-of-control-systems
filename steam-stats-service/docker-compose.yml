@@ -15,12 +15,6 @@ services:
       - APP_ENV=${APP_ENV}
       - APP_DEBUG=${APP_DEBUG}
       - APP_URL=${APP_URL}
-      - DB_CONNECTION=${DB_CONNECTION}
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_DATABASE=${DB_DATABASE}
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_PASSWORD=${DB_PASSWORD}
       - STEAM_API_KEY=${STEAM_API_KEY}
     networks:
       - app-network
@@ -39,19 +33,6 @@ services:
     networks:
       - app-network
 
-  db:
-    image: mysql:8.0
-    container_name: steam-stats-db
-    restart: unless-stopped
-    environment:
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "3306:3306"
-    volumes:
-      - dbdata:/var/lib/mysql
-    networks:
-      - app-network
 
 networks:
   app-network:
