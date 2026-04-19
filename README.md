@@ -27,11 +27,11 @@ cp .env.example .env
 ```
 docker-compose up -d
 ```
-После запуска микросервис будет доступен по адресу http://localhost:8080.
+После запуска микросервис будет доступен по адресу http://localhost:8084.
 
 4. **Проверьте работу**
 ```
-curl -i http://localhost:8080/stats/123456789
+curl -i http://localhost:8084/stats/123456789
 ```
 
 5. **Остановка**
