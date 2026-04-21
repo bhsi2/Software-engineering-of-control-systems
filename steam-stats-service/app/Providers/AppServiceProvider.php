@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Services\AuthServiceClient;
+use GuzzleHttp\Client;
 
 class AppServiceProvider extends ServiceProvider
 {

@@ -10,9 +10,9 @@ class SteamApiService
     private Client $client;
     private string $apiKey;
 
-    public function __construct(string $apiKey)
+    public function __construct(?string $apiKey = null)
     {
-        $this->apiKey = $apiKey;
+        $this->apiKey = $apiKey ?? env('STEAM_API_KEY', '');
         $this->client = new Client([
             'base_uri' => 'https://api.steampowered.com/',
             'timeout' => 10.0,

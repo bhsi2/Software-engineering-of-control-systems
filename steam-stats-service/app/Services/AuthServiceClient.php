@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use Illuminate\Support\Facades\Log;
 
 class AuthServiceClient
 {
-    private Client $httpClient;
+    private ClientInterface $httpClient;
     private string $authServiceUrl;
 
     public function __construct(ClientInterface $httpClient, string $authServiceUrl)
