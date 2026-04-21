@@ -72,7 +72,7 @@ AUTH_SERVICE_URL=http://auth-service:80
 
 
 Сервис аутентификации должен предоставлять эндпоинт:
-GET /steam-id/{telegramId}
+GET /link/{telegramId}
 
 
 Ответ при успехе (200):

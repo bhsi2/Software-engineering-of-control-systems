@@ -10,13 +10,12 @@ class AuthServiceClient
     private Client $httpClient;
     private string $authServiceUrl;
 
-    public function __construct()
+    public function __construct(ClientInterface $httpClient, string $authServiceUrl)
     {
-        $this->authServiceUrl = config('services.auth_service.url');
-        $this->httpClient = new Client([
-            'timeout' => 5.0,
-        ]);
+        $this->httpClient = $httpClient;
+        $this->authServiceUrl = rtrim($authServiceUrl, '/'); 
     }
+
 
     /**
      * Получить Steam ID по Telegram ID из сервиса аутентификации.
@@ -28,7 +27,7 @@ class AuthServiceClient
     public function getSteamId(int $telegramId): ?string
     {
         try {
-            $response = $this->httpClient->get($this->authServiceUrl . '/steam-id/' . $telegramId, [
+            $response = $this->httpClient->get($this->authServiceUrl . '/link/' . $telegramId, [
                 'headers' => [
                     'Accept' => 'application/json',
                 ],

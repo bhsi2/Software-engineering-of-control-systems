@@ -11,10 +11,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(SteamApiService::class, function ($app) {
-            return new SteamApiService(config('services.steam.api_key'));
+        $this->app->bind(AuthServiceClient::class, function ($app) {
+            return new AuthServiceClient(
+                new Client(['timeout' => 5.0]),
+                config('services.auth_service.url')
+            );
         });
     }
+
 
     /**
      * Bootstrap any application services.
