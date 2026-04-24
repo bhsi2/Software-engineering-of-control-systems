@@ -18,7 +18,27 @@ class SteamApiService
             'timeout' => 10.0,
         ]);
     }
-
+    /**
+     * @return ?array{
+     *     avatar: string,
+     *     avatarmedium: string,
+     *     avatarfull: string,
+     *     personaname: string,
+     *     profileurl: string,
+     *     steamid: string,
+     *     communityvisibilitystate: int,
+     *     profilestate: int,
+     *     lastlogoff: int,
+     *     personastate: int,
+     *     realname: ?string,
+     *     primaryclanid: ?string,
+     *     timecreated: ?int,
+     *     personastateflags: ?int,
+     *     gameextrainfo: ?string,
+     *     gameid: ?string,
+     *     loccountrycode: ?string
+     * }
+    */
     public function getPlayerSummary(string $steamId): ?array
     {
         try {
@@ -35,7 +55,9 @@ class SteamApiService
             return null;
         }
     }
-
+    /**
+     * @return ?array{game_count: int, games: array<int, array{appid: int, name: string, playtime_forever: int, playtime_2weeks: int}>}
+     */
     public function getOwnedGames(string $steamId): ?array
     {
         try {

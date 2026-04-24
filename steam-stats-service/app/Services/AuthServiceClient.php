@@ -2,15 +2,15 @@
 
 namespace App\Services;
 
-use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 
 class AuthServiceClient
 {
-    private ClientInterface $httpClient;
+    private Client $httpClient;
     private string $authServiceUrl;
 
-    public function __construct(ClientInterface $httpClient, string $authServiceUrl)
+    public function __construct(Client $httpClient, string $authServiceUrl)
     {
         $this->httpClient = $httpClient;
         $this->authServiceUrl = rtrim($authServiceUrl, '/'); 

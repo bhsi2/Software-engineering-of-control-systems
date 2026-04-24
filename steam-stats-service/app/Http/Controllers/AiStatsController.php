@@ -7,7 +7,7 @@ use App\Services\SteamStatsProvider;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-
+use App\DTO\SteamStatsDto;
 class AiStatsController extends Controller
 {
     public function __construct(
@@ -69,7 +69,7 @@ class AiStatsController extends Controller
         ]);
     }
 
-    private function generateSummary($stats): string
+    private function generateSummary(SteamStatsDto $stats): string
     {
         // Здесь можно улучшить генерацию текста, добавив больше деталей
         $hours = $stats->hoursTotal;
