@@ -12,6 +12,6 @@ class SteamStatsDto
         public readonly int $friendCount,
         public readonly string $personState,
         public readonly string $communityVisibility,
-        public readonly int $accountCreated, // unix timestamp
+        public readonly int $accountCreated,
     ) {}
 }

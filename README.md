@@ -63,6 +63,33 @@ composer require pestphp/pest --dev
 ./vendor/bin/pest
 ```
 
+## Эндпоинты
+GET /stats/{telegramId}
+
+Ответ при успехе (200):
+```json
+{
+  "nickname": "Gaben",
+  "gamesCount":"542",
+  "hoursTotal":"14837",
+  "topGame":"Team Fortress 2",
+  "steamLevel":123,
+  "friendCount":250,
+  "personState":"online",
+  "communityVisibility":"public",
+  "accountCreated":1104537600
+}
+```
+
+POST /ai/stats/{telegramId}
+
+Ответ при успехе (200):
+```json
+{
+  "status": "success",
+  "summary": "Игрок Gaben имеет 542 игр в библиотеке, общее наигранное время: 14837 часов. Самая популярная игра: Team Fortress 2. Уровень Steam: 123. Количество друзей 250. Профиль публичный. Пользователь сейчас в сети. "
+}
+```
 
 ## Взаимодействие с сервисом аутентификации
 

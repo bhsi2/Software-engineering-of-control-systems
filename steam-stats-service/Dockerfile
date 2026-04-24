@@ -26,7 +26,7 @@ RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 # Установка зависимостей Composer (без dev-зависимостей в продакшн)
 RUN composer install --no-interaction --optimize-autoloader --no-dev
 
-# Кэширование конфигурации и маршрутов (для продакшн)
+# Кэширование конфигурации и маршрутов 
 RUN php artisan config:cache && php artisan route:cache
 
 EXPOSE 9000
