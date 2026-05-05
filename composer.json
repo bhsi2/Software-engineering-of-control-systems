@@ -28,5 +28,10 @@
     },
     "require": {
         "laravel/framework": "^13.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
     }
 }

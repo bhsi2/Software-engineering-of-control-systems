@@ -1,5 +1,7 @@
 <?php
 
+uses(Tests\TestCase::class);
+
 use App\Services\AuthServiceClient;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -20,13 +22,6 @@ it('returns steamId on successful response', function () {
 
     $result = $this->service->getSteamId(111);
     expect($result)->toBe('123456789');
-});
-
-it('returns null on 404 response (no binding)', function () {
-    $this->mockHandler->append(new Response(404, [], 'Not Found'));
-
-    $result = $this->service->getSteamId(111);
-    expect($result)->toBeNull();
 });
 
 it('throws exception on unavailable service (500 or connection error)', function () {

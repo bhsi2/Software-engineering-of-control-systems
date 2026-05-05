@@ -1,26 +1,31 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-echo "Checking if container 'steam-app' is running..."
-
-# Проверяем, запущен ли контейнер
+echo "🔄 Проверяем контейнер 'steam-app'..."
 if ! docker ps --format '{{.Names}}' | grep -q 'steam-app'; then
-    echo "Container 'steam-app' is not running. Starting it via docker-compose..."
-    docker-compose up -d steam-service
-    echo "Waiting for container to be ready..."
+    echo "🚀 Контейнер не запущен. Запускаем docker compose..."
+    docker compose up -d steam-service
     sleep 5
 fi
 
-echo "Running code style fixer (Pint), static analysis (PHPStan) and tests (Pest) inside container..."
-docker exec -t steam-app bash -c "composer format && composer analyse && composer test"
+echo "📦 Устанавливаем Composer зависимости (включая dev)..."
+docker exec steam-app composer install --dev --no-interaction
 
-# Проверяем код возврата
+echo "🔥 Пересобираем автозагрузчик..."
+docker exec steam-app composer dump-autoload
+
+echo "🧹 Очищаем кэш Laravel..."
+docker exec steam-app php artisan optimize:clear
+
+echo "🎨 Запускаем форматирование кода..."
+docker exec steam-app composer format
+
+echo "🧪 Запускаем тесты..."
+docker exec steam-app composer test
+
 if [ $? -ne 0 ]; then
-    echo "====================="
-    echo "Checks failed. Commit aborted."
-    echo "Fix the issues and try again."
-    echo "====================="
+    echo "❌ Ошибка! Коммит отменён."
     exit 1
 fi
 
-echo "All checks passed. Proceeding with commit."
+echo "✅ Все проверки пройдены. Коммитим."

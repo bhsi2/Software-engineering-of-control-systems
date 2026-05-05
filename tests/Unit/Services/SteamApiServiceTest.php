@@ -1,5 +1,7 @@
 <?php
 
+uses(Tests\TestCase::class);
+
 use App\Services\SteamApiService;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -54,7 +56,6 @@ it('returns null on player summary failure', function () {
     $steamId = '76561197960287930';
     $this->mockHandler->append(new Response(500, [], 'Internal Error'));
 
-    // Ожидаем, что Log::error будет вызван один раз
     Log::shouldReceive('error')
         ->once()
         ->with(Mockery::pattern('/Steam API error/'))
