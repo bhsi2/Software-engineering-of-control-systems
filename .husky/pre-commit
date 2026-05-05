@@ -8,6 +8,13 @@ if ! docker ps --format '{{.Names}}' | grep -q 'steam-app'; then
     sleep 5
 fi
 
+echo "Install Laravel Framework"
+docker exec steam-app composer require laravel/framework
+
+echo "add an exception for this directory for git"
+docker exec steam-app git config --global --add safe.directory /var/www/html
+
+
 echo "📦 Устанавливаем Composer зависимости (включая dev)..."
 docker exec steam-app composer install --dev --no-interaction
 

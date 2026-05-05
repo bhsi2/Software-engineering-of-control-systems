@@ -26,6 +26,9 @@ jobs:
           sleep 10
           docker exec steam-app composer install --dev
 
+      - name: Install Laravel Framework
+        run: docker exec steam-app composer require laravel/framework
+        
       - name: Run code style check (Pint)
         run: docker exec steam-app composer format
 
