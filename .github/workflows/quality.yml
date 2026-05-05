@@ -26,9 +26,6 @@ jobs:
           sleep 10
           docker exec steam-app composer install --dev
 
-      - name: Install Laravel Framework
-        run: docker exec steam-app composer require laravel/framework
-
       - name: Run code style check (Pint)
         run: docker exec steam-app composer format
 
@@ -39,12 +36,6 @@ jobs:
         run: docker exec steam-app composer analyse
         continue-on-error: true   # не ломает пайплайн, если ошибки есть
 
-      - name: create composer autoload
-        run: docker exec steam-app composer dump-autoload
-
-      - name: Clear cache Laravel
-        run: docker exec steam-app php artisan optimize:clear
-        
       - name: Run tests (Pest)
         run: docker exec steam-app composer test
 
