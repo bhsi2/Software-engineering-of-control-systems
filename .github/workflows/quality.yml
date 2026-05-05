@@ -29,9 +29,6 @@ jobs:
       - name: Run code style check (Pint)
         run: docker exec steam-app composer format
 
-      - name: add an exception for this directory for git
-        run: docker exec steam-app git config --global --add safe.directory /var/www/html
-
       - name: Run static analysis (PHPStan) [optional]
         run: docker exec steam-app composer analyse
         continue-on-error: true   # не ломает пайплайн, если ошибки есть
