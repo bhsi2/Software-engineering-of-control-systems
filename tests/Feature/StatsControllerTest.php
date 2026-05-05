@@ -1,13 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Log;
 use App\DTO\SteamStatsDto;
+use App\Http\Controllers\StatsController;
 use App\Services\AuthServiceClient;
 use App\Services\SteamStatsProvider;
 use Illuminate\Support\Facades\Route;
 
 beforeEach(function () {
-    Route::get('/stats/{telegramId}', [\App\Http\Controllers\StatsController::class, 'show']);
+    Route::get('/stats/{telegramId}', [StatsController::class, 'show']);
 });
 
 it('returns stats successfully', function () {

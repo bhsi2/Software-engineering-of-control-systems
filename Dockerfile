@@ -27,7 +27,7 @@ RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 RUN composer install --no-interaction --optimize-autoloader --no-dev
 
 # Кэширование конфигурации и маршрутов 
-RUN php artisan config:cache && php artisan route:cache
+#RUN php artisan config:cache && php artisan route:cache
 
 EXPOSE 9000
 CMD ["php-fpm"]

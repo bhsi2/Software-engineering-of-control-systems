@@ -1,5 +1,5 @@
 <?php
-use Illuminate\Support\Facades\Log;
+
 use App\DTO\SteamStatsDto;
 use App\Services\SteamApiService;
 use App\Services\SteamStatsProvider;

@@ -1,5 +1,5 @@
 <?php
-use Illuminate\Support\Facades\Log;
+
 use App\Services\AuthServiceClient;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -7,7 +7,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 
 beforeEach(function () {
-    $mock = new MockHandler();
+    $mock = new MockHandler;
     $handlerStack = HandlerStack::create($mock);
     $client = new Client(['handler' => $handlerStack]);
 
@@ -32,6 +32,6 @@ it('returns null on 404 response (no binding)', function () {
 it('throws exception on unavailable service (500 or connection error)', function () {
     $this->mockHandler->append(new Response(500, [], 'Internal Error'));
 
-    expect(fn() => $this->service->getSteamId(111))
+    expect(fn () => $this->service->getSteamId(111))
         ->toThrow(RuntimeException::class, 'Auth service unavailable');
 });

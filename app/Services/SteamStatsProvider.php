@@ -13,6 +13,7 @@ class SteamStatsProvider
     public function getStats(string $steamId): SteamStatsDto
     {
         // 1. Получаем сводку (ник, статус, дата регистрации, видимость)
+        /** @var array{personaname?: string, personastate?: int, communityvisibilitystate?: int, timecreated?: int} $summary */
         $summary = $this->steamApi->getPlayerSummary($steamId);
         if (!$summary) {
             throw new \RuntimeException('Steam profile not found');
@@ -22,9 +23,10 @@ class SteamStatsProvider
         // Определяем статус пользователя
         $personState = $this->mapPersonState($summary['personastate'] ?? 0);
         $communityVisibility = $this->mapCommunityVisibility($summary['communityvisibilitystate'] ?? 1);
-        $accountCreated = $summary['timecreated'] ?? null; // unix timestamp
+        $accountCreated = $summary['timecreated'] ?? 0; // unix timestamp
 
         // 2. Получаем игры
+        /** @var array{game_count?: int, games?: array<int, array{appid: int, name: string, playtime_forever: int}>} $gamesData */
         $gamesData = $this->steamApi->getOwnedGames($steamId);
         if (!$gamesData || !isset($gamesData['games'])) {
             $gamesCount = 0;
@@ -53,7 +55,7 @@ class SteamStatsProvider
             friendCount: $friendCount,
             personState: $personState,
             communityVisibility: $communityVisibility,
-            accountCreated: $accountCreated ?? 0,
+            accountCreated: $accountCreated,
         );
     }
 
