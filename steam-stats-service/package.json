@@ -4,8 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "dev": "vite",
-    "prepare": "husky"
+    "dev": "vite"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.0.0",
@@ -26,12 +25,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "lint-staged": {
-    "*.php": [
-      "composer format",
-      "composer analyse",
-      "composer test"
-    ]
-  }
+  "license": "ISC"
 }

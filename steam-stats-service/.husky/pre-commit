@@ -1,1 +1,26 @@
-npx lint-staged
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "Checking if container 'steam-app' is running..."
+
+# Проверяем, запущен ли контейнер
+if ! docker ps --format '{{.Names}}' | grep -q 'steam-app'; then
+    echo "Container 'steam-app' is not running. Starting it via docker-compose..."
+    docker-compose up -d steam-service
+    echo "Waiting for container to be ready..."
+    sleep 5
+fi
+
+echo "Running code style fixer (Pint), static analysis (PHPStan) and tests (Pest) inside container..."
+docker exec -T steam-app bash -c "composer format && composer analyse && composer test"
+
+# Проверяем код возврата
+if [ $? -ne 0 ]; then
+    echo "====================="
+    echo "Checks failed. Commit aborted."
+    echo "Fix the issues and try again."
+    echo "====================="
+    exit 1
+fi
+
+echo "All checks passed. Proceeding with commit."

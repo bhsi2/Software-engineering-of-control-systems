@@ -3,17 +3,28 @@
         "laravel/pint": "^1.29",
         "phpstan/phpstan": "^2.1",
         "phpunit/phpunit": "^12.5",
-        "pestphp/pest": "^4.7"
-    }
-    ,"scripts": {
+        "pestphp/pest": "^4.7",
+        "mockery/mockery": "^1.6",
+        "laravel/pail": "^1.2"
+    },
+    "scripts": {
         "format": "pint",
         "format:test": "pint --test",
-        "analyse": "phpstan analyse --memory-limit=2G",
-        "test": "pest"
+        "analyse": "phpstan analyse",
+        "test": "pest",
+        "test:docker": "docker exec -it steam-app ./vendor/bin/pest"
     },
     "config": {
         "allow-plugins": {
             "pestphp/pest-plugin": true
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "laravel/framework": "^13.7"
     }
 }

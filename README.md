@@ -53,14 +53,17 @@ php artisan serve
 
 **Тесты**
 
-Установка Pest
+Для запуска тестов обязательно надо запустить контейнеры
+
+А так же установленный husky
+
+husky можно установить с помощью npm:
 ```
-composer require pestphp/pest --dev
-./vendor/bin/pest --init
+npm i husky
 ```
 Запуск тестов
 ```
-./vendor/bin/pest
+composer test:docker
 ```
 
 ## Эндпоинты
