@@ -27,7 +27,7 @@ jobs:
           docker exec steam-app composer install --dev
 
       - name: Run code style check (Pint)
-        run: docker exec steam-app composer format:test
+        run: docker exec steam-app composer format
 
       - name: Run static analysis (PHPStan) [optional]
         run: docker exec steam-app composer analyse

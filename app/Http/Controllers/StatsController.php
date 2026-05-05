@@ -7,15 +7,13 @@ use App\Services\SteamStatsProvider;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 
-class StatsController extends Controller
-{
+class StatsController extends Controller {
     public function __construct(
         protected AuthServiceClient $authClient,
         protected SteamStatsProvider $statsProvider
     ) {}
 
-    public function show(int $telegramId): JsonResponse
-    {
+    public function show(int $telegramId): JsonResponse {
         // 1. Запрашиваем steamId у сервиса аутентификации
         try {
             $steamId = $this->authClient->getSteamId($telegramId);

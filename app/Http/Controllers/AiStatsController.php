@@ -9,15 +9,13 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class AiStatsController extends Controller
-{
+class AiStatsController extends Controller {
     public function __construct(
         protected AuthServiceClient $authClient,
         protected SteamStatsProvider $statsProvider
     ) {}
 
-    public function getSummary(Request $request): JsonResponse
-    {
+    public function getSummary(Request $request): JsonResponse {
         $telegramId = $request->input('telegramId');
 
         if (!$telegramId) {
@@ -72,8 +70,7 @@ class AiStatsController extends Controller
         ]);
     }
 
-    private function generateSummary(SteamStatsDto $stats): string
-    {
+    private function generateSummary(SteamStatsDto $stats): string {
         // Здесь можно улучшить генерацию текста, добавив больше деталей
         $hours = $stats->hoursTotal;
         $games = $stats->gamesCount;

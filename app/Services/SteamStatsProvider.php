@@ -4,14 +4,12 @@ namespace App\Services;
 
 use App\DTO\SteamStatsDto;
 
-class SteamStatsProvider
-{
+class SteamStatsProvider {
     public function __construct(
         protected SteamApiService $steamApi
     ) {}
 
-    public function getStats(string $steamId): SteamStatsDto
-    {
+    public function getStats(string $steamId): SteamStatsDto {
         // 1. Получаем сводку (ник, статус, дата регистрации, видимость)
         /** @var array{personaname?: string, personastate?: int, communityvisibilitystate?: int, timecreated?: int} $summary */
         $summary = $this->steamApi->getPlayerSummary($steamId);
@@ -59,8 +57,7 @@ class SteamStatsProvider
         );
     }
 
-    private function mapPersonState(int $state): string
-    {
+    private function mapPersonState(int $state): string {
         return match ($state) {
             0 => 'offline',
             1 => 'online',
@@ -74,8 +71,7 @@ class SteamStatsProvider
         };
     }
 
-    private function mapCommunityVisibility(int $visibility): string
-    {
+    private function mapCommunityVisibility(int $visibility): string {
         return match ($visibility) {
             1 => 'private',
             2 => 'friends-only',
@@ -84,8 +80,7 @@ class SteamStatsProvider
         };
     }
 
-    private function findMostPlayedGame(array $games): string
-    {
+    private function findMostPlayedGame(array $games): string {
         $maxGame = '';
         $maxTime = -1;
         foreach ($games as $game) {
