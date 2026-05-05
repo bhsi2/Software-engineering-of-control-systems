@@ -24,10 +24,24 @@ jobs:
       - name: Wait for container to be ready and install dev dependencies
         run: |
           sleep 10
-          docker exec steam-app composer install --dev
+          docker exec steam-app git config --global --add safe.directory /var/www/html
+          docker exec steam-app mkdir -p /var/www/html/tests
+          # Если файл отсутствует на хосте, скопировать из образа или создать
+          if ! docker exec steam-app test -f /var/www/html/tests/TestCase.php; then
+             docker exec steam-app cp /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Testing/TestCase.php /var/www/html/tests/TestCase.php
+          fi
+          
+      - name: Install dev dependencies and clear cache
+        run: |
+          docker exec steam-app composer install --dev --no-interaction
+          docker exec steam-app composer dump-autoload
+          docker exec steam-app php artisan config:clear
 
       - name: Run code style check (Pint)
         run: docker exec steam-app composer format
+
+      - name: add an exception for this directory for git
+        run: docker exec steam-app git config --global --add safe.directory /var/www/html
 
       - name: Run static analysis (PHPStan) [optional]
         run: docker exec steam-app composer analyse
