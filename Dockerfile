@@ -24,7 +24,7 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Установка зависимостей Composer (без dev-зависимостей в продакшн)
-RUN composer install --no-interaction --optimize-autoloader --no-dev
+RUN composer install --no-interaction --optimize-autoloader
 
 # Кэширование конфигурации и маршрутов 
 #RUN php artisan config:cache && php artisan route:cache
