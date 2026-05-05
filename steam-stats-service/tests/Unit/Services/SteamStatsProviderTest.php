@@ -33,7 +33,7 @@ it('returns stats for public profile', function () {
             'games' => [
                 ['name' => 'Game1', 'playtime_forever' => 120],
                 ['name' => 'Game2', 'playtime_forever' => 240],
-            ]
+            ],
         ]);
 
     $this->steamApi->shouldReceive('getSteamLevel')
@@ -128,6 +128,6 @@ it('throws exception when player summary missing', function () {
         ->once()
         ->andReturn(null);
 
-    expect(fn() => $this->provider->getStats($steamId))
-        ->toThrow(\RuntimeException::class, 'Steam profile not found');
+    expect(fn () => $this->provider->getStats($steamId))
+        ->toThrow(RuntimeException::class, 'Steam profile not found');
 });

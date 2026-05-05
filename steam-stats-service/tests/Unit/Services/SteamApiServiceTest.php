@@ -4,12 +4,12 @@ use App\Services\SteamApiService;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Middleware;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Log;
 
 beforeEach(function () {
-    $this->mockHandler = new MockHandler();
+    $this->mockHandler = new MockHandler;
     $handlerStack = HandlerStack::create($this->mockHandler);
     $this->history = [];
     $history = Middleware::history($this->history);
@@ -35,9 +35,9 @@ it('fetches player summary successfully', function () {
                     'personastate' => 1,
                     'communityvisibilitystate' => 3,
                     'timecreated' => 1104537600,
-                ]
-            ]
-        ]
+                ],
+            ],
+        ],
     ];
     $this->mockHandler->append(new Response(200, [], json_encode($responseBody)));
 
@@ -57,7 +57,7 @@ it('returns null on player summary failure', function () {
     // Ожидаем, что Log::error будет вызван один раз
     Log::shouldReceive('error')
         ->once()
-        ->with(\Mockery::pattern('/Steam API error/'))
+        ->with(Mockery::pattern('/Steam API error/'))
         ->andReturn(null);
 
     $result = $this->service->getPlayerSummary($steamId);
@@ -73,8 +73,8 @@ it('fetches owned games successfully', function () {
             'games' => [
                 ['appid' => 440, 'name' => 'Team Fortress 2', 'playtime_forever' => 3600],
                 ['appid' => 730, 'name' => 'Counter-Strike', 'playtime_forever' => 7200],
-            ]
-        ]
+            ],
+        ],
     ];
     $this->mockHandler->append(new Response(200, [], json_encode($responseBody)));
 
@@ -92,7 +92,7 @@ it('returns null on owned games failure', function () {
 
     Log::shouldReceive('error')
         ->once()
-        ->with(\Mockery::pattern('/Steam API error/'))
+        ->with(Mockery::pattern('/Steam API error/'))
         ->andReturn(null);
 
     $result = $this->service->getOwnedGames($steamId);
@@ -116,7 +116,7 @@ it('returns null on steam level failure', function () {
 
     Log::shouldReceive('error')
         ->once()
-        ->with(\Mockery::pattern('/Steam API error/'))
+        ->with(Mockery::pattern('/Steam API error/'))
         ->andReturn(null);
 
     $result = $this->service->getSteamLevel($steamId);
@@ -131,8 +131,8 @@ it('fetches friend count successfully', function () {
             'friends' => [
                 ['steamid' => '123', 'relationship' => 'friend'],
                 ['steamid' => '456', 'relationship' => 'friend'],
-            ]
-        ]
+            ],
+        ],
     ];
     $this->mockHandler->append(new Response(200, [], json_encode($responseBody)));
 
@@ -157,7 +157,7 @@ it('returns 0 on friend list failure', function () {
 
     Log::shouldReceive('error')
         ->once()
-        ->with(\Mockery::pattern('/Steam API error/'))
+        ->with(Mockery::pattern('/Steam API error/'))
         ->andReturn(null);
 
     $result = $this->service->getFriendCount($steamId);

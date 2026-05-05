@@ -38,7 +38,7 @@ return [
     'steam' => [
         'api_key' => env('STEAM_API_KEY'),
     ],
-    
+
     'auth_service' => [
         'url' => env('AUTH_SERVICE_URL', 'http://localhost:8081'),
     ],

@@ -8,26 +8,24 @@ use Illuminate\Support\Facades\Log;
 class AuthServiceClient
 {
     private Client $httpClient;
+
     private string $authServiceUrl;
 
     public function __construct(Client $httpClient, string $authServiceUrl)
     {
         $this->httpClient = $httpClient;
-        $this->authServiceUrl = rtrim($authServiceUrl, '/'); 
+        $this->authServiceUrl = rtrim($authServiceUrl, '/');
     }
-
 
     /**
      * Получить Steam ID по Telegram ID из сервиса аутентификации.
      *
-     * @param int $telegramId
-     * @return string|null
      * @throws \RuntimeException если сервис недоступен или вернул ошибку
      */
     public function getSteamId(int $telegramId): ?string
     {
         try {
-            $response = $this->httpClient->get($this->authServiceUrl . '/link/' . $telegramId, [
+            $response = $this->httpClient->get($this->authServiceUrl.'/link/'.$telegramId, [
                 'headers' => [
                     'Accept' => 'application/json',
                 ],
@@ -35,6 +33,7 @@ class AuthServiceClient
 
             if ($response->getStatusCode() === 200) {
                 $data = json_decode($response->getBody(), true);
+
                 return $data['steamId'] ?? null;
             }
 
@@ -46,6 +45,7 @@ class AuthServiceClient
                 'status' => $response->getStatusCode(),
                 'telegramId' => $telegramId,
             ]);
+
             return null;
         } catch (\Exception $e) {
             Log::error('Auth service request failed', [

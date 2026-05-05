@@ -33,7 +33,8 @@ class StatsController extends Controller
         } catch (\RuntimeException $e) {
             return response()->json(['error' => $e->getMessage()], 404);
         } catch (\Exception $e) {
-            Log::error('Unexpected error: ' . $e->getMessage());
+            Log::error('Unexpected error: '.$e->getMessage());
+
             return response()->json(['error' => 'Internal server error'], 500);
         }
 

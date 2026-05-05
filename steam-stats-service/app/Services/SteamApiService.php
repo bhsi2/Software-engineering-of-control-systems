@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 class SteamApiService
 {
     private Client $client;
+
     private string $apiKey;
 
     public function __construct(?string $apiKey = null)
@@ -18,6 +19,7 @@ class SteamApiService
             'timeout' => 10.0,
         ]);
     }
+
     /**
      * @return ?array{
      *     avatar: string,
@@ -38,23 +40,26 @@ class SteamApiService
      *     gameid: ?string,
      *     loccountrycode: ?string
      * }
-    */
+     */
     public function getPlayerSummary(string $steamId): ?array
     {
         try {
             $response = $this->client->get('ISteamUser/GetPlayerSummaries/v0002/', [
                 'query' => [
                     'key' => $this->apiKey,
-                    'steamids' => $steamId
-                ]
+                    'steamids' => $steamId,
+                ],
             ]);
             $data = json_decode($response->getBody(), true);
+
             return $data['response']['players'][0] ?? null;
         } catch (\Exception $e) {
-            Log::error('Steam API error (getPlayerSummary): ' . $e->getMessage());
+            Log::error('Steam API error (getPlayerSummary): '.$e->getMessage());
+
             return null;
         }
     }
+
     /**
      * @return ?array{game_count: int, games: array<int, array{appid: int, name: string, playtime_forever: int, playtime_2weeks: int}>}
      */
@@ -67,13 +72,15 @@ class SteamApiService
                     'steamid' => $steamId,
                     'include_appinfo' => true,
                     'include_played_free_games' => true,
-                    'format' => 'json'
-                ]
+                    'format' => 'json',
+                ],
             ]);
             $data = json_decode($response->getBody(), true);
+
             return $data['response'] ?? null;
         } catch (\Exception $e) {
-            Log::error('Steam API error (getOwnedGames): ' . $e->getMessage());
+            Log::error('Steam API error (getOwnedGames): '.$e->getMessage());
+
             return null;
         }
     }
@@ -85,12 +92,14 @@ class SteamApiService
                 'query' => [
                     'key' => $this->apiKey,
                     'steamid' => $steamId,
-                ]
+                ],
             ]);
             $data = json_decode($response->getBody(), true);
+
             return $data['response']['player_level'] ?? null;
         } catch (\Exception $e) {
-            Log::error('Steam API error (getSteamLevel): ' . $e->getMessage());
+            Log::error('Steam API error (getSteamLevel): '.$e->getMessage());
+
             return null;
         }
     }
@@ -103,13 +112,15 @@ class SteamApiService
                     'key' => $this->apiKey,
                     'steamid' => $steamId,
                     'relationship' => 'friend',
-                ]
+                ],
             ]);
             $data = json_decode($response->getBody(), true);
             $friends = $data['friendslist']['friends'] ?? [];
+
             return count($friends);
         } catch (\Exception $e) {
-            Log::error('Steam API error (getFriendCount): ' . $e->getMessage());
+            Log::error('Steam API error (getFriendCount): '.$e->getMessage());
+
             return null;
         }
     }

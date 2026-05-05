@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\DTO\SteamStatsDto;
@@ -17,7 +18,7 @@ class SteamStatsProvider
             throw new \RuntimeException('Steam profile not found');
         }
         $nickname = $summary['personaname'] ?? 'Unknown';
-        
+
         // Определяем статус пользователя
         $personState = $this->mapPersonState($summary['personastate'] ?? 0);
         $communityVisibility = $this->mapCommunityVisibility($summary['communityvisibilitystate'] ?? 1);
@@ -91,6 +92,7 @@ class SteamStatsProvider
                 $maxGame = $game['name'] ?? 'Unknown';
             }
         }
+
         return $maxGame ?: '—';
     }
 }

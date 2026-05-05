@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\SteamStatsDto;
 use App\Services\AuthServiceClient;
 use App\Services\SteamStatsProvider;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use App\DTO\SteamStatsDto;
+
 class AiStatsController extends Controller
 {
     public function __construct(
@@ -22,7 +23,7 @@ class AiStatsController extends Controller
         if (!$telegramId) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Missing telegramId'
+                'message' => 'Missing telegramId',
             ], 400);
         }
 
@@ -31,16 +32,17 @@ class AiStatsController extends Controller
             $steamId = $this->authClient->getSteamId($telegramId);
         } catch (\RuntimeException $e) {
             Log::error('Auth service unavailable', ['telegramId' => $telegramId]);
+
             return response()->json([
                 'status' => 'error',
-                'message' => 'Auth service unavailable'
+                'message' => 'Auth service unavailable',
             ], 503);
         }
 
         if (!$steamId) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'No binding found'
+                'message' => 'No binding found',
             ], 404);
         }
 
@@ -50,13 +52,14 @@ class AiStatsController extends Controller
         } catch (\RuntimeException $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ], 404);
         } catch (\Exception $e) {
             Log::error('Unexpected error', ['error' => $e->getMessage()]);
+
             return response()->json([
                 'status' => 'error',
-                'message' => 'Internal server error'
+                'message' => 'Internal server error',
             ], 500);
         }
 
@@ -65,7 +68,7 @@ class AiStatsController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'summary' => $summary
+            'summary' => $summary,
         ]);
     }
 
@@ -85,15 +88,15 @@ class AiStatsController extends Controller
         $text .= "Количество друзей: {$friends}. ";
 
         if ($stats->communityVisibility === 'public') {
-            $text .= "Профиль публичный. ";
+            $text .= 'Профиль публичный. ';
         } else {
-            $text .= "Профиль приватный. ";
+            $text .= 'Профиль приватный. ';
         }
 
         if ($stats->personState === 'online') {
-            $text .= "Пользователь сейчас в сети. ";
+            $text .= 'Пользователь сейчас в сети. ';
         } elseif ($stats->personState === 'in-game') {
-            $text .= "Пользователь сейчас в игре. ";
+            $text .= 'Пользователь сейчас в игре. ';
         }
 
         return $text;
