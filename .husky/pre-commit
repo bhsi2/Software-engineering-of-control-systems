@@ -12,7 +12,7 @@ if ! docker ps --format '{{.Names}}' | grep -q 'steam-app'; then
 fi
 
 echo "Running code style fixer (Pint), static analysis (PHPStan) and tests (Pest) inside container..."
-docker exec -T steam-app bash -c "composer format && composer analyse && composer test"
+docker exec -t steam-app bash -c "composer format && composer analyse && composer test"
 
 # Проверяем код возврата
 if [ $? -ne 0 ]; then

@@ -1,9 +1,0 @@
-parameters:
-    level: 5
-    paths:
-        - app
-        - tests
-    excludePaths:
-        - tests/__snapshots__
-    ignoreErrors:
-        - '#Unsafe usage of new static#'

@@ -12,7 +12,6 @@
 ```
 bash
 git clone https://github.com/bhsi2/Software-engineering-of-control-systems.git
-cd steam-stats-service
 ```
 2. **Скопируйте файл окружения**
 ```
