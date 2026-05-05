@@ -34,7 +34,7 @@ jobs:
         continue-on-error: true   # не ломает пайплайн, если ошибки есть
 
       - name: add an exception for this directory for git
-        docker exec steam-app git config --global --add safe.directory /var/www/html
+        run: docker exec steam-app git config --global --add safe.directory /var/www/html
 
       - name: Run tests (Pest)
         run: docker exec steam-app composer test
