@@ -33,6 +33,9 @@ jobs:
         run: docker exec steam-app composer analyse
         continue-on-error: true   # не ломает пайплайн, если ошибки есть
 
+      - name: create composer autoload
+        run: docker exec steam-app composer dump-autoload
+
       - name: add an exception for this directory for git
         run: docker exec steam-app git config --global --add safe.directory /var/www/html
 
